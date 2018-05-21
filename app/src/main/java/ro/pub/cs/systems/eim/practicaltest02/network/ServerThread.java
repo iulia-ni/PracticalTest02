@@ -51,14 +51,21 @@ public class ServerThread extends Thread {
         return serverSocket;
     }
 
-    public synchronized void setData(String city, String time) {
-        this.data.put(city, time);
+    public synchronized void setData(String client, String time) {
+        if (this.data.containsKey(client)) {
+            this.data.remove(client);
+        }
+        this.data.put(client, time);
     }
 
     public synchronized HashMap<String, String> getData() {
         return data;
     }
 
+    public synchronized void resetData( String client) {
+        if (this.data.containsKey(client)) {
+            this.data.remove(client);
+        }    }
     @Override
     public void run() {
         try {

@@ -50,13 +50,15 @@ public class ClientThread extends Thread{
 
             String weatherInformation;
             while ((weatherInformation = bufferedReader.readLine()) != null) {
-                final String finalizedWeateherInformation = weatherInformation;
-                weatherForecastTextView.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        weatherForecastTextView.setText(finalizedWeateherInformation);
-                    }
-                });
+//                final String finalizedWeateherInformation = weatherInformation;
+//                weatherForecastTextView.post(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        weatherForecastTextView.setText(finalizedWeateherInformation);
+//                    }
+//                });
+                Log.e(Constants.TAG, "[CLIENT THREAD] Received: " + weatherInformation);
+
             }
         } catch (IOException ioException) {
             Log.e(Constants.TAG, "[CLIENT THREAD] An exception has occurred: " + ioException.getMessage());
