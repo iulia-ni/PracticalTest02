@@ -24,7 +24,7 @@ public class ClientThread extends Thread{
 
     private Socket socket;
 
-    public ClientThread(String address, int port, String city) {
+    public ClientThread(String address, int port, String command) {
         this.address = address;
         this.port = port;
         this.command = command;

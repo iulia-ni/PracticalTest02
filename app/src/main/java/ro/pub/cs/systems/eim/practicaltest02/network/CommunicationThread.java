@@ -58,27 +58,43 @@ public class CommunicationThread extends Thread {
                 } else {
                     serverThread.setData(client, getCurrentTimeStamp());
                 }
+                String message = "Your alarm was set";
+
+                printWriter.println(message);
+                printWriter.flush();
+                return;
             }
 
             if (command.equalsIgnoreCase("reset")) {
                 Log.i(Constants.TAG, "[COMMUNICATION THREAD] Received reset command");
                 serverThread.resetData(client);
+                String message = "Your alarm was reset";
+
+                printWriter.println(message);
+                printWriter.flush();
+                return;
             }
 
             if (command.equalsIgnoreCase("poll")) {
-                String result = null;
+                Log.i(Constants.TAG, "[COMMUNICATION THREAD] Received poll command");
+
+                String result;
                 if (!data.containsKey(client)){
                     Log.i(Constants.TAG, "[COMMUNICATION THREAD] No alarm");
-                    result = "None\n";
+                    result = "None";
                 } else {
 
                     String time = data.get(client);
+                    Log.i(Constants.TAG, "[COMMUNICATION THREAD] time = " + time);
+
                     Calendar rightNow = Calendar.getInstance();
                     int hour = rightNow.get(Calendar.HOUR_OF_DAY);
                     int minute = rightNow.get(Calendar.MINUTE);
                     int setHour;
                     int setMinute;
-                    String[] parts = time.split(":");
+                    String[] parts;
+
+                    parts = time.split(":");
                     setHour = Integer.parseInt(parts[0]);
                     setMinute = Integer.parseInt(parts[1]);
                     if (setHour >= hour && setMinute >= minute ) {
@@ -87,6 +103,7 @@ public class CommunicationThread extends Thread {
                     } else {
                         Log.i(Constants.TAG, "[COMMUNICATION THREAD] active");
                         result = "inactive";
+
                     }
 
                 }
@@ -98,6 +115,8 @@ public class CommunicationThread extends Thread {
                 printWriter.println(result);
                 printWriter.flush();
             }
+
+
 
         } catch (IOException ioException) {
             Log.e(Constants.TAG, "[COMMUNICATION THREAD] An exception has occurred: " + ioException.getMessage());
